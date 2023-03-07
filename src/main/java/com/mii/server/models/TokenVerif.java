@@ -1,5 +1,7 @@
 package com.mii.server.models;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,17 +13,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_privilege_role")
-public class PrivilegeRole {
-    
+@Table(name = "tb_token_verif")
+public class TokenVerif {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idprivilege;
+    private Integer id;
 
     @Column(nullable = false)
-    private Integer idrole;
+    private String token;
+
+    @Column(nullable = false)
+    private LocalDateTime createdate;
+
+    @Column(nullable = false)
+    private LocalDateTime expiredate;
+
+    @Column(nullable = false)
+    private LocalDateTime confirmdate;
+
 }

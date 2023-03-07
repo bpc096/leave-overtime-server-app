@@ -1,11 +1,9 @@
-package com.mii.server.models.entities;
+package com.mii.server.models;
 
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,21 +16,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tb_leave")
-public class Leave {
+public class LeaveHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private LocalDateTime starday;
+    private String createdby;
 
     @Column(nullable = false)
-    private LocalDateTime endday;
+    private LocalDateTime datetime;
 
     @Column(nullable = false)
-    private LocalDateTime applydate;
-
-    @Column(nullable = false)
-    private String updateby;
-
+    private String status;
 }

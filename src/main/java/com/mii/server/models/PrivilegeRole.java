@@ -1,6 +1,4 @@
-package com.mii.server.models.entities;
-
-import java.time.LocalDateTime;
+package com.mii.server.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,19 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_overtime")
-public class Overtime {
-
+@Table(name = "tb_privilege_role")
+public class PrivilegeRole {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-   
-    private String count;
+    private Integer idprivilege;
 
     @Column(nullable = false)
-    private LocalDateTime applydate;
-
-    private String history;
-    
+    private Integer idrole;
 }

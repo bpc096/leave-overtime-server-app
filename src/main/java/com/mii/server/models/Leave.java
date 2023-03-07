@@ -1,6 +1,6 @@
-package com.mii.server.models.entities;
+package com.mii.server.models;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,25 +17,22 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_employee")
-public class Employee {
+@Table(name = "tb_leave")
+public class Leave {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = true)
-    private Integer idmanager;
+    private LocalDateTime starday;
 
     @Column(nullable = false)
-    private String gender;
+    private LocalDateTime endday;
 
     @Column(nullable = false)
-    private Date birthdate;
+    private LocalDateTime applydate;
 
-    @Column(nullable = true)
-    private String address;
+    @Column(nullable = false)
+    private String updateby;
 
 }

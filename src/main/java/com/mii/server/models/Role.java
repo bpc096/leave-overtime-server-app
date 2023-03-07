@@ -1,4 +1,4 @@
-package com.mii.server.models.entities;
+package com.mii.server.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
-public class TypeLeave {
+@Table(name= "tb_role")
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +24,8 @@ public class TypeLeave {
 
     @Column(nullable = false)
     private String name;
+    
+    // @Column(nullable = false)
+    // private String privilege;
     
 }

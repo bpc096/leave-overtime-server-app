@@ -1,9 +1,9 @@
-package com.mii.server.models.entities;
-
-import java.time.LocalDateTime;
+package com.mii.server.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,21 +11,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_leave")
-public class LeaveHistory {
+@Entity
+@Table(name = "tb_project")
+public class Project {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String createdby;
+    private String name;
 
-    @Column(nullable = false)
-    private LocalDateTime datetime;
-
-    @Column(nullable = false)
-    private String status;
+    @Column(length = 10)
+    private String overtimeBudget;
+    
 }

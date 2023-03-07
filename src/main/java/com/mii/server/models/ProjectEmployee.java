@@ -1,4 +1,4 @@
-package com.mii.server.models.entities;
+package com.mii.server.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,21 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_user")
-public class User {
+@Table(name = "tb_project_employee")
+public class ProjectEmployee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false, unique = true, length = 50)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    private Boolean isEnabled = false;
-    private Boolean isAccountNonLocked = true;
-
-    @Column(nullable = false)
-    private Integer quota = 12;
+    
+    @Column(length = 5)
+    private String name;
 }

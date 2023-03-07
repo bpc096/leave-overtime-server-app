@@ -1,4 +1,4 @@
-package com.mii.server.models.entities;
+package com.mii.server.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_project_employee")
-public class ProjectEmployee {
+@Table(name = "tb_status")
+public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(length = 5)
+
+    @Column(nullable = false)
     private String name;
+    
 }

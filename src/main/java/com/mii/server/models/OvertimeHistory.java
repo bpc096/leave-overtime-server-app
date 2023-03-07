@@ -20,16 +20,14 @@ public class OvertimeHistory {
 
     @Id
     private Integer id;
-    
+
     @Column(nullable = false)
     private String createby;
 
     @Column
-    private LocalDateTime date;
+    private LocalDateTime datetime;
 
     @Column(nullable = false)
     private String status;
 
-    @Column(nullable = false)
-    private String idovertime;
 }

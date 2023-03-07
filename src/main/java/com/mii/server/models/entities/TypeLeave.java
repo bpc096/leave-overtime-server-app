@@ -1,5 +1,6 @@
-package com.mii.server.models;
+package com.mii.server.models.entities;
 
+import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_project")
-public class Project {
+@Table
+public class TypeLeave {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +25,5 @@ public class Project {
 
     @Column(nullable = false)
     private String name;
-
-    @Column(length = 10)
-    private String overtimeBudget;
     
 }

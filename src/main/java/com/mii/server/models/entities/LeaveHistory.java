@@ -1,4 +1,4 @@
-package com.mii.server.models;
+package com.mii.server.models.entities;
 
 import java.sql.Date;
 import java.time.LocalDate;

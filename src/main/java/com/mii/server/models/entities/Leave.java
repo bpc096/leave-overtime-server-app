@@ -1,4 +1,7 @@
-package com.mii.server.models;
+package com.mii.server.models.entities;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,17 +14,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_privilege_role")
-public class PrivilegeRole {
-    
+@Table(name = "tb_leave")
+public class Leave {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idprivilege;
+    private Integer id;
 
     @Column(nullable = false)
-    private Integer idrole;
+    private LocalDateTime starday;
+
+    @Column(nullable = false)
+    private LocalDateTime endday;
+
+    @Column(nullable = false)
+    private LocalDateTime applydate;
+
+    @Column(nullable = false)
+    private String updateby;
+
 }

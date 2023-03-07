@@ -1,6 +1,5 @@
-package com.mii.server.models;
+package com.mii.server.models.entities;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,14 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
-public class TypeLeave {
-
+@Table(name = "tb_privilege_role")
+public class PrivilegeRole {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idprivilege;
 
     @Column(nullable = false)
-    private String name;
-    
+    private Integer idrole;
 }

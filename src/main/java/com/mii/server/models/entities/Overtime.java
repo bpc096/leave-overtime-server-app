@@ -1,6 +1,6 @@
-package com.mii.server.models;
+package com.mii.server.models.entities;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,33 +9,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.web.servlet.FlashMapManager;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_employee")
-public class Employee {
+@Entity
+@Table(name = "tb_overtime")
+public class Overtime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = true)
-    private Integer idmanager;
+   
+    private String count;
 
     @Column(nullable = false)
-    private String gender;
+    private LocalDateTime applydate;
 
-    @Column(nullable = false)
-    private Date birthdate;
-
-    @Column(nullable = true)
-    private String address;
-
+    private String history;
+    
 }

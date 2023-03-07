@@ -1,2 +1,2 @@
-# leave-overtime-spring
-Leave and Overtime BE using Spring Boot
+# leave-overtime-server-app
+Leave and Overtime Server BE using Spring Boot

@@ -1,6 +1,5 @@
 package com.mii.server.models;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;

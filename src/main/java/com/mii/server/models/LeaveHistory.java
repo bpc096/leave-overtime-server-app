@@ -1,5 +1,9 @@
 package com.mii.server.models;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,25 +15,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_user")
-public class User {
+@Table(name = "tb_leave")
+public class LeaveHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String username;
+    @Column(nullable = false)
+    private String createdby;
 
     @Column(nullable = false)
-    private String password;
-
-    private Boolean isEnabled = false;
-    private Boolean isAccountNonLocked = true;
+    private LocalDateTime datetime;
 
     @Column(nullable = false)
-    private Integer quota = 12;
+    private String status;
 }

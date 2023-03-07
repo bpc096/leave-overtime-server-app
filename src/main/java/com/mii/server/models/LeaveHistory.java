@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_leave")
+@Table(name = "tb_leave_history")
 public class LeaveHistory {
     @Id
     private Integer id;

@@ -27,7 +27,6 @@ public class RoleService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
     }
 
-
     public Role create(Role role) {
         if (roleRepository.findByName(role.getName()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");

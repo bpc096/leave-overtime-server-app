@@ -1,10 +1,19 @@
 package com.mii.server.models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -32,4 +41,12 @@ public class User {
 
     @Column(nullable = false)
     private Integer quota = 12;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Employee employee;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 }

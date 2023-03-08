@@ -4,10 +4,13 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,4 +46,9 @@ public class Employee {
     @Column(nullable = true)
     private String phone;
 
+    @OneToOne
+    @MapsId
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "id")
+    private User user;
 }

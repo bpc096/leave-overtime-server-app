@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_employee")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
@@ -37,5 +36,11 @@ public class Employee {
 
     @Column(nullable = true)
     private String address;
+
+    @Column(nullable = true, unique = true)
+    private String email;
+
+    @Column(nullable = true)
+    private String phone;
 
 }

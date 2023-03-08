@@ -26,22 +26,16 @@ public class LeaveHistoryService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
     }
 
-
     public LeaveHistory create(LeaveHistory leaveHistory) {
-        if (leaveHistoryRepository.findByName(leaveHistory.getName()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-        }
+
         return leaveHistoryRepository.save(leaveHistory);
     }
 
-    // public LeaveHistory update(Integer id, LeaveHistory leaveHistory) {
-    //     getById(id);
-    //     leaveHistory.setId(id);
-    //     if (leaveHistoryRepository.findByName(leaveHistory.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-    //     }
-    //     return leaveHistoryRepository.save(leaveHistory);
-    // }
+    public LeaveHistory update(Integer id, LeaveHistory leaveHistory) {
+        getById(id);
+        leaveHistory.setId(id);
+        return leaveHistoryRepository.save(leaveHistory);
+    }
 
     public LeaveHistory delete(Integer id) {
         LeaveHistory leaveHistory = getById(id);

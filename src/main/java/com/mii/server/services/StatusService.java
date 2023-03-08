@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class StatusService {
-    
+
     private StatusRepository statusRepository;
 
     public List<Status> getAll() {
@@ -23,12 +23,12 @@ public class StatusService {
 
     public Status getById(Integer id) {
         return statusRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Status id not found!!!"));
     }
 
     public Status create(Status status) {
         if (statusRepository.findByName(status.getName()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Status name is already exists...");
         }
         return statusRepository.save(status);
     }
@@ -37,7 +37,7 @@ public class StatusService {
         getById(id);
         status.setId(id);
         if (statusRepository.findByName(status.getName()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Status name is already exists...");
         }
         return statusRepository.save(status);
     }

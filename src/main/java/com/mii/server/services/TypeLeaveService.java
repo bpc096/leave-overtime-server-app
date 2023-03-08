@@ -14,9 +14,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class TypeLeaveService {
-    
-    private TypeLeaveRepository typeLeaveRepository;
 
+    private TypeLeaveRepository typeLeaveRepository;
 
     public List<TypeLeave> getAll() {
         return typeLeaveRepository.findAll();
@@ -24,12 +23,12 @@ public class TypeLeaveService {
 
     public TypeLeave getById(Integer id) {
         return typeLeaveRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "TypeLeave id not found!!!"));
     }
 
     public TypeLeave create(TypeLeave typeLeave) {
         if (typeLeaveRepository.findByName(typeLeave.getName()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "TypeLeave name is already exists...");
         }
         return typeLeaveRepository.save(typeLeave);
     }
@@ -38,14 +37,14 @@ public class TypeLeaveService {
         getById(id);
         typeLeave.setId(id);
         if (typeLeaveRepository.findByName(typeLeave.getName()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "TypeLeave name is already exists...");
         }
         return typeLeaveRepository.save(typeLeave);
     }
 
     public TypeLeave delete(Integer id) {
-        TypeLeave role = getById(id);
-        typeLeaveRepository.delete(role);
-        return role;
+        TypeLeave typeleave = getById(id);
+        typeLeaveRepository.delete(typeleave);
+        return typeleave;
     }
 }

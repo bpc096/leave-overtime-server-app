@@ -1,4 +1,4 @@
-package com.mii.server.models.dto.Requests;
+package com.mii.server.models.dto.requests;
 
 import java.util.Date;
 

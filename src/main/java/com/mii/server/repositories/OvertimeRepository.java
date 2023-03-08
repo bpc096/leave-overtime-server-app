@@ -8,5 +8,5 @@ import com.mii.server.models.Overtime;
 
 public interface OvertimeRepository extends JpaRepository<Overtime, Integer> {
 
-    public Optional<Overtime> findByName(String name);
+    // public Optional<Overtime> findByName(String name);
 }

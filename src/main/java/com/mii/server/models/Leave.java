@@ -1,5 +1,7 @@
 package com.mii.server.models;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -24,15 +26,21 @@ public class Leave {
     private Integer id;
 
     @Column(nullable = false)
-    private LocalDateTime starday;
+    private Date startday;
 
     @Column(nullable = false)
-    private LocalDateTime endday;
+    private Date endday;
 
     @Column(nullable = false)
     private LocalDateTime applydate;
 
     @Column(nullable = false)
     private String updateby;
+
+    @Column(nullable = false)
+    private String reason;
+
+    @Column(nullable = true)
+    private LocalDateTime respontime;
 
 }

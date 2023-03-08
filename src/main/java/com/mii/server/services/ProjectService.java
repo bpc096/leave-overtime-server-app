@@ -25,21 +25,18 @@ public class ProjectService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
     }
 
+    public Project create(Project project) {
 
-    // public Project create(Project project) {
+        return projectRepository.save(project);
+    }
+
+    public Project update(Integer id, Project project) {
+        getById(id);
+        project.setId(id);
+        return projectRepository.save(project);
+    }
+
     
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-    //     return projectRepository.save(project);
-    // }
-
-    // public Project update(Integer id, Project project) {
-    //     getById(id);
-    //     project.setId(id);
-    //     if (projectRepository.findByName(project.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-    //     }
-    //     return projectRepository.save(project);
-    // }
 
     public Project delete(Integer id) {
         Project project = getById(id);

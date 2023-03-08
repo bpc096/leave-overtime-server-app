@@ -26,22 +26,17 @@ public class TokenVerifService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
     }
 
-    
-    // public TokenVerif create(TokenVerif tokenVerif) {
-    //     if (tokenVerifRepository.findByName(tokenVerif.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-    //     }
-    //     return tokenVerifRepository.save(tokenVerif);
-    // }
+    public TokenVerif create(TokenVerif tokenVerif) {
 
-    // public TokenVerif update(Integer id, TokenVerif tokenVerif) {
-    //     getById(id);
-    //     tokenVerif.setId(id);
-    //     if (tokenVerifRepository.findByName(tokenVerif.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-    //     }
-    //     return tokenVerifRepository.save(tokenVerif);
-    // }
+        return tokenVerifRepository.save(tokenVerif);
+    }
+
+    public TokenVerif update(Integer id, TokenVerif tokenVerif) {
+        getById(id);
+        tokenVerif.setId(id);
+        return tokenVerifRepository.save(tokenVerif);
+    }
+    
 
     public TokenVerif delete(Integer id) {
         TokenVerif tokenVerif = getById(id);

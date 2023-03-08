@@ -26,21 +26,16 @@ public class OvertimeHistoryService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Overtime History id not found!!!"));
     }
 
-    // public OvertimeHistory create(OvertimeHistory overtimeHistory) {
-    //     if (overtimeHistoryRepository.findByName(overtimeHistory.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Overtime History name is already exists...");
-    //     }
-    //     return overtimeHistoryRepository.save(overtimeHistory);
-    // }
+    public OvertimeHistory create(OvertimeHistory overtimeHistory) {
 
-    // public OvertimeHistory update(Integer id, OvertimeHistory overtimeHistory) {
-    //     getById(id);
-    //     overtimeHistory.setId(id);
-    //     if (overtimeHistoryRepository.findByName(overtimeHistory.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Overtime History name is already exists...");
-    //     }
-    //     return overtimeHistoryRepository.save(overtimeHistory);
-    // }
+        return overtimeHistoryRepository.save(overtimeHistory);
+    }
+
+    public OvertimeHistory update(Integer id, OvertimeHistory overtimeHistory) {
+        getById(id);
+        overtimeHistory.setId(id);
+        return overtimeHistoryRepository.save(overtimeHistory);
+    }
 
     public OvertimeHistory delete(Integer id) {
         OvertimeHistory overtimeHistory = getById(id);

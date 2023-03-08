@@ -27,12 +27,12 @@ public class LeaveHistoryService {
     }
 
 
-    // public LeaveHistory create(LeaveHistory leaveHistory) {
-    //     if (leaveHistoryRepository.findByName(leaveHistory.getName()).isPresent()) {
-    //         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
-    //     }
-    //     return leaveHistoryRepository.save(leaveHistory);
-    // }
+    public LeaveHistory create(LeaveHistory leaveHistory) {
+        if (leaveHistoryRepository.findByName(leaveHistory.getName()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
+        }
+        return leaveHistoryRepository.save(leaveHistory);
+    }
 
     // public LeaveHistory update(Integer id, LeaveHistory leaveHistory) {
     //     getById(id);

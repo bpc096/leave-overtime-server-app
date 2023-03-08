@@ -1,5 +1,7 @@
 package com.mii.server.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -27,13 +29,18 @@ public class OvertimeService {
     }
 
     public Overtime create(Overtime overtime) {
-
+        overtime.setApplydate(LocalDateTime.now());
+        overtime.setRespontime(null);
         return overtimeRepository.save(overtime);
     }
 
     public Overtime update(Integer id, Overtime overtime) {
         getById(id);
         overtime.setId(id);
+
+        LocalDateTime apply = getById(id).getApplydate();
+        overtime.setApplydate(apply);
+        overtime.setRespontime(LocalDateTime.now());
         return overtimeRepository.save(overtime);
     }
 

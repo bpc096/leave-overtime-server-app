@@ -24,12 +24,19 @@ public class Overtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-   
-    private String count;
+    @Column(nullable = false)
+    private Integer count;
 
     @Column(nullable = false)
     private LocalDateTime applydate;
 
-    private String history;
-    
+    @Column(nullable = false)
+    private String purpose;
+
+    @Column(nullable = false)
+    private String updateby;
+
+    @Column(nullable = true)
+    private LocalDateTime respontime;
+
 }

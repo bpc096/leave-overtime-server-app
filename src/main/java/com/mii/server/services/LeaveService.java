@@ -1,5 +1,6 @@
 package com.mii.server.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -27,13 +28,17 @@ public class LeaveService {
     }
 
     public Leave create(Leave leave) {
-
+        leave.setApplydate(LocalDateTime.now());
+        leave.setRespontime(null);
         return leaveRepository.save(leave);
     }
 
     public Leave update(Integer id, Leave leave) {
         getById(id);
         leave.setId(id);
+        LocalDateTime apply = getById(id).getApplydate();
+        leave.setApplydate(apply);
+        leave.setRespontime(LocalDateTime.now());
         return leaveRepository.save(leave);
     }
 
@@ -43,6 +48,4 @@ public class LeaveService {
         return leave;
     }
 
-    
-    
 }

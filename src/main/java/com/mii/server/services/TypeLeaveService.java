@@ -31,21 +31,21 @@ public class TypeLeaveService {
         if (typeLeaveRepository.findByName(typeLeave.getName()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
         }
-        return roleRepository.save(role);
+        return typeLeaveRepository.save(typeLeave);
     }
 
-    public Roles update(Integer id, Roles role) {
+    public TypeLeave update(Integer id, TypeLeave typeLeave) {
         getById(id);
-        role.setId(id);
-        if (roleRepository.findByName(role.getName()).isPresent()) {
+        typeLeave.setId(id);
+        if (typeLeaveRepository.findByName(typeLeave.getName()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name is already exists...");
         }
-        return roleRepository.save(role);
+        return typeLeaveRepository.save(typeLeave);
     }
 
-    public Roles delete(Integer id) {
-        Roles role = getById(id);
-        roleRepository.delete(role);
+    public TypeLeave delete(Integer id) {
+        TypeLeave role = getById(id);
+        typeLeaveRepository.delete(role);
         return role;
     }
 }

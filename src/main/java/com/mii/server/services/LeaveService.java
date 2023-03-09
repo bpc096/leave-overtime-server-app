@@ -47,16 +47,21 @@ public class LeaveService {
 
         leave.setApplydate(LocalDateTime.now());
         leave.setRespontime(null);
-        leaveHistoryService.create(null)
+        leaveHistoryService.create(leaveRequest);
         return leaveRepository.save(leave);
     }
-
-    public Leave update(Integer id, Leave leave) {
+ 
+    public Leave update(Integer id, LeaveRequest leaveRequest) {
         getById(id);
-        leave.setId(id);
+        Leave leave = modelMapper.map(leaveRequest,Leave.class);
+        leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+        leave.setStatus(statusService.getById(leaveRequest.getStatusId()));
+
         LocalDateTime apply = getById(id).getApplydate();
         leave.setApplydate(apply);
         leave.setRespontime(LocalDateTime.now());
+        leaveHistoryService.create2(id,leaveRequest);
+
         return leaveRepository.save(leave);
     }
 

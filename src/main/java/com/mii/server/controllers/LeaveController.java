@@ -44,8 +44,8 @@ public class LeaveController {
     // }
 
     @PutMapping(value = "/{id}")
-    public Leave update(@PathVariable Integer id, @RequestBody Leave leave) {
-        return leaveService.update(id, leave);
+    public Leave update(@PathVariable Integer id, @RequestBody LeaveRequest leaveRequest) {
+        return leaveService.update(id, leaveRequest);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -27,7 +27,7 @@ public class LeaveHistoryService {
     }
 
     public LeaveHistory create(LeaveHistory leaveHistory) {
-
+        
         return leaveHistoryRepository.save(leaveHistory);
     }
 
@@ -42,5 +42,7 @@ public class LeaveHistoryService {
         leaveHistoryRepository.delete(leaveHistory);
         return leaveHistory;
     }
+
+
 
 }

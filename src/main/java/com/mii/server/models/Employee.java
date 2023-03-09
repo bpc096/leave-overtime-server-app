@@ -1,12 +1,17 @@
 package com.mii.server.models;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -51,4 +56,8 @@ public class Employee {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "id")
     private User user;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Leave> leaves;
 }

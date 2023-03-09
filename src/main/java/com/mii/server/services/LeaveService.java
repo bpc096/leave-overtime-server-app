@@ -3,11 +3,13 @@ package com.mii.server.services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mii.server.models.Leave;
+import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.repositories.LeaveRepository;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +19,8 @@ import lombok.AllArgsConstructor;
 public class LeaveService {
 
     private LeaveRepository leaveRepository;
+    private ModelMapper modelMapper;
+    private EmployeeService employeeService;
 
     public List<Leave> getAll() {
         return leaveRepository.findAll();
@@ -27,9 +31,17 @@ public class LeaveService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leave id not found!!!"));
     }
 
-    public Leave create(Leave leave) {
-        leave.setApplydate(LocalDateTime.now());
-        leave.setRespontime(null);
+    // public Leave create(Leave leave) {
+    //     leave.setApplydate(LocalDateTime.now());
+    //     leave.setRespontime(null);
+    //     return leaveRepository.save(leave);
+    // }
+    public Leave create(LeaveRequest leaveRequest) {
+        Leave leave = modelMapper.map(leaveRequest,Leave.class);
+        leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+        leaveRequest.setApplydate(LocalDateTime.now());
+        leaveRequest.setRespontime(null);
+        
         return leaveRepository.save(leave);
     }
 

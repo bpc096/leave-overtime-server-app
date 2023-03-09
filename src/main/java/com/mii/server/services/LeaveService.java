@@ -21,6 +21,9 @@ public class LeaveService {
     private LeaveRepository leaveRepository;
     private ModelMapper modelMapper;
     private EmployeeService employeeService;
+    private StatusService statusService;
+    private LeaveHistoryService leaveHistoryService;
+
 
     public List<Leave> getAll() {
         return leaveRepository.findAll();
@@ -36,12 +39,15 @@ public class LeaveService {
     //     leave.setRespontime(null);
     //     return leaveRepository.save(leave);
     // }
+
     public Leave create(LeaveRequest leaveRequest) {
         Leave leave = modelMapper.map(leaveRequest,Leave.class);
         leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
-        leaveRequest.setApplydate(LocalDateTime.now());
-        leaveRequest.setRespontime(null);
-        
+        leave.setStatus(statusService.getById(leaveRequest.getStatusId()));
+
+        leave.setApplydate(LocalDateTime.now());
+        leave.setRespontime(null);
+        leaveHistoryService.create(null)
         return leaveRepository.save(leave);
     }
 

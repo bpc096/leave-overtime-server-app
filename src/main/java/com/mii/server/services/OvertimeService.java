@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mii.server.models.Overtime;
+import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.models.dto.requests.OvertimeRequest;
 import com.mii.server.repositories.OvertimeRepository;
 
@@ -23,6 +24,7 @@ public class OvertimeService {
     private ModelMapper modelMapper;
     private EmployeeService employeeService;
     private StatusService statusService;
+    private OvertimeHistoryService overtimeHistoryService;
 
 
     public List<Overtime> getAll() {
@@ -47,16 +49,21 @@ public class OvertimeService {
         overtime.setApplydate(LocalDateTime.now());
         overtime.setRespontime(null);
         
+        overtimeHistoryService.create(overtimeRequest);
         return overtimeRepository.save(overtime);
     }
 
-    public Overtime update(Integer id, Overtime overtime) {
+    public Overtime update(Integer id, OvertimeRequest overtimeRequest) {
         getById(id);
-        overtime.setId(id);
+        Overtime overtime = modelMapper.map(overtimeRequest,Overtime.class);
+        overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
+        overtime.setStatus(statusService.getById(overtimeRequest.getStatusId()));
+        
 
         LocalDateTime apply = getById(id).getApplydate();
         overtime.setApplydate(apply);
         overtime.setRespontime(LocalDateTime.now());
+        overtimeHistoryService.create2(id,overtimeRequest);
         return overtimeRepository.save(overtime);
     }
 

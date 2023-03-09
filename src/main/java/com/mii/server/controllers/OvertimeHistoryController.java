@@ -32,10 +32,10 @@ public class OvertimeHistoryController {
         return overtimeHistoryService.getById(id);
     }
 
-    @PostMapping
-    public OvertimeHistory create(@RequestBody OvertimeHistory overtimeHistory) {
-        return overtimeHistoryService.create(overtimeHistory);
-    }
+    // @PostMapping
+    // public OvertimeHistory create(@RequestBody OvertimeHistory overtimeHistory) {
+    //     return overtimeHistoryService.create(overtimeHistory);
+    // }
 
     
 

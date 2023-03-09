@@ -4,7 +4,11 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -19,15 +23,30 @@ import lombok.NoArgsConstructor;
 public class OvertimeHistory {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String createby;
-
-    @Column
-    private LocalDateTime datetime;
+    private Integer count;
 
     @Column(nullable = false)
-    private String status;
+    private LocalDateTime applydate;
+
+    @Column(nullable = false)
+    private String purpose;
+
+    @Column(nullable = false)
+    private String updateby;
+
+    @Column(nullable = true)
+    private LocalDateTime respontime;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private Status status;
 
 }

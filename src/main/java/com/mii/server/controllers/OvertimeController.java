@@ -41,8 +41,8 @@ public class OvertimeController {
     }
 
     @PutMapping(value = "/{id}")
-    public Overtime update(@PathVariable Integer id, @RequestBody Overtime overtime) {
-        return overtimeService.update(id, overtime);
+    public Overtime update(@PathVariable Integer id, @RequestBody OvertimeRequest overtimeRequest) {
+        return overtimeService.update(id, overtimeRequest);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -24,5 +24,7 @@ public class TypeLeave {
 
     @Column(nullable = false)
     private String name;
+
+    
     
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mii.server.models.Leave;
+import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.services.LeaveService;
 
 import lombok.AllArgsConstructor;
@@ -34,9 +35,13 @@ public class LeaveController {
     }
 
     @PostMapping
-    public Leave create(@RequestBody Leave leave) {
-        return leaveService.create(leave);
+    public Leave create(@RequestBody LeaveRequest leaveRequest) {
+        return leaveService.create(leaveRequest);
     }
+    // @PostMapping
+    // public Leave create(@RequestBody Leave leaveRequest) {
+    //     return leaveService.create(leaveRequest);
+    // }
 
     @PutMapping(value = "/{id}")
     public Leave update(@PathVariable Integer id, @RequestBody Leave leave) {

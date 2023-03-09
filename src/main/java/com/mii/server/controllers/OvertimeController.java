@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mii.server.models.Overtime;
+import com.mii.server.models.dto.requests.OvertimeRequest;
 import com.mii.server.services.OvertimeService;
 
 import lombok.AllArgsConstructor;
@@ -35,8 +36,8 @@ public class OvertimeController {
     }
 
     @PostMapping
-    public Overtime create(@RequestBody Overtime overtime) {
-        return overtimeService.create(overtime);
+    public Overtime create(@RequestBody OvertimeRequest overtimeRequest) {
+        return overtimeService.create(overtimeRequest);
     }
 
     @PutMapping(value = "/{id}")

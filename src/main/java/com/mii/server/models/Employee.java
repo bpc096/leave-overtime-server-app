@@ -60,4 +60,8 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Leave> leaves;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Overtime> overtime;
 }

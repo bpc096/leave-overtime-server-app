@@ -15,4 +15,5 @@ public class LeaveRequest {
     private String reason;
     private LocalDateTime respontime;
     private Integer employeeId;
+    private Integer statusId;
 }

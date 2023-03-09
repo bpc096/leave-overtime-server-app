@@ -31,19 +31,19 @@ public class LeaveService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leave id not found!!!"));
     }
 
-    // public Leave create(Leave leave) {
-    //     leave.setApplydate(LocalDateTime.now());
-    //     leave.setRespontime(null);
-    //     return leaveRepository.save(leave);
-    // }
-    public Leave create(LeaveRequest leaveRequest) {
-        Leave leave = modelMapper.map(leaveRequest,Leave.class);
-        leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
-        leaveRequest.setApplydate(LocalDateTime.now());
-        leaveRequest.setRespontime(null);
-        
+    public Leave create(Leave leave) {
+        leave.setApplydate(LocalDateTime.now());
+        leave.setRespontime(null);
         return leaveRepository.save(leave);
     }
+    // public Leave create(LeaveRequest leaveRequest) {
+    // Leave leave = modelMapper.map(leaveRequest,Leave.class);
+    // leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+    // leaveRequest.setApplydate(LocalDateTime.now());
+    // leaveRequest.setRespontime(null);
+
+    // return leaveRepository.save(leave);
+    // }
 
     public Leave update(Integer id, Leave leave) {
         getById(id);

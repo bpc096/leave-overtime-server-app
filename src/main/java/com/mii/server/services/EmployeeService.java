@@ -26,7 +26,7 @@ public class EmployeeService {
                         "Employee not found!!!"));
     }
 
-    // create without dto
+   
     public Employee create(Employee employee) {
         if (employeeRepository.findByEmail(employee.getEmail()).isPresent() &&
                 employeeRepository.findByPhone(employee.getPhone()).isPresent()) {

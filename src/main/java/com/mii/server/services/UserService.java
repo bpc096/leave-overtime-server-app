@@ -49,7 +49,7 @@ public class UserService {
 
         // set role
         List<Role> roles = new ArrayList<>();
-        roles.add(roleService.getById(3));
+        roles.add(roleService.getById(1));
         user.setRoles(roles);
 
         user.setEmployee(employee);

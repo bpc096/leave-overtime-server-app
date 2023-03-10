@@ -6,6 +6,8 @@ import com.mii.server.models.dto.requests.UserRequest;
 import com.mii.server.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -30,10 +32,10 @@ public class UserController {
         return userService.create(userRequest);
     }
 
-    @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return userService.confirmToken(token);
-    }
+    // @GetMapping(path = "confirm")
+    // public String confirm(@RequestParam("token") String token) {
+    // return userService.confirmToken(token);
+    // }
 
     @PutMapping(value = "/{id}")
     public User update(@PathVariable Integer id, @RequestBody User user) {
@@ -48,5 +50,14 @@ public class UserController {
     @PostMapping("/{id}")
     public User addRole(@PathVariable Integer id, @RequestBody Role role) {
         return userService.addRole(id, role);
+    }
+
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (userService.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
     }
 }

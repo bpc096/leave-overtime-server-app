@@ -42,6 +42,9 @@ public class User {
     @Column(nullable = false)
     private Integer quota = 12;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Employee employee;

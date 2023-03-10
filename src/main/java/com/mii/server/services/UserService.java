@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import lombok.AllArgsConstructor;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,7 +35,7 @@ public class UserService {
     private final TokenVerifService tokenVerifService;
     private final EmailValidator emailValidator;
     // private PasswordEncoder passwordEncoder;
-    // private JavaMailSender mailSender;
+    private JavaMailSender mailSender;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -49,22 +51,6 @@ public class UserService {
         User user = modelMapper.map(userRequest, User.class);
         Employee employee = modelMapper.map(userRequest, Employee.class);
 
-        boolean isValidEmail = emailValidator.test(userRequest.getEmail());
-
-        if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
-        }
-
-        String token = appUserService.signUpUser(
-                new AppUser(
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
-                        request.getPassword(),
-                        AppUserRole.USER
-
-                ));
-
         // set password
         // user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
@@ -79,27 +65,27 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @Transactional
-    public String confirmToken(String token) {
-        TokenVerif confirmationToken = tokenVerifService
-                .getToken(token)
-                .orElseThrow(() -> new IllegalStateException("token not found"));
+    // @Transactional
+    // public String confirmToken(String token) {
+    // TokenVerif confirmationToken = tokenVerifService
+    // .getToken(token)
+    // .orElseThrow(() -> new IllegalStateException("token not found"));
 
-        if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
-        }
+    // if (confirmationToken.getConfirmedAt() != null) {
+    // throw new IllegalStateException("email already confirmed");
+    // }
 
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
+    // LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
-        }
+    // if (expiredAt.isBefore(LocalDateTime.now())) {
+    // throw new IllegalStateException("token expired");
+    // }
 
-        tokenVerifService.setConfirmedAt(token);
-        employeeService.enableAppUser(
-                confirmationToken.getAppUser().getEmail());
-        return "confirmed";
-    }
+    // tokenVerifService.setConfirmedAt(token);
+    // employeeService.enableAppUser(
+    // confirmationToken.getAppUser().getEmail());
+    // return "confirmed";
+    // }
 
     // public User create(UserRequest userRequest, String siteURL)
     // throws UnsupportedEncodingException, MessagingException {
@@ -145,45 +131,47 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String signUpUser(UserRequest userRequest, User user) {
-        Employee employee = modelMapper.map(userRequest, Employee.class);
-        
-        boolean userExists = userRepository
-                .findByEmail(user.)
-                .isPresent();
+    private User sendVerificationEmail(Employee employee, User user, String siteURL)
+            throws MessagingException, UnsupportedEncodingException {
+        String toAddress = employee.getEmail();
+        String fromAddress = "billpetrus8@gmail.com";
+        String senderName = "Waroeng Idea";
+        String subject = "Please verify your registration";
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to verify your registration:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "Thank you,<br>"
+                + "Waroeng IDEA.";
 
-        if (userExists) {
-            // TODO check of attributes are the same and
-            // TODO if email not confirmed send confirmation email.
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            throw new IllegalStateException("email already taken");
-        }
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
 
-        String encodedPassword = bCryptPasswordEncoder
-                .encode(appUser.getPassword());
+        content = content.replace("[[name]]", employee.getName());
+        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
 
-        appUser.setPassword(encodedPassword);
+        content = content.replace("[[URL]]", verifyURL);
+        helper.setText(content, true);
 
-        appUserRepository.save(appUser);
+        mailSender.send(message);
+        System.out.println("Email has been sent");
 
-        String token = UUID.randomUUID().toString();
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                appUser
-        );
-
-        confirmationTokenService.saveConfirmationToken(
-                confirmationToken);
-
-//        TODO: SEND EMAIL
-
-        return token;
+        return user;
     }
 
-    public int enableAppUser(String email) {
-        return userRepository.enableAppUser(email);
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+        if (user == null || user.getIsEnabled()) {
+            return false;
+        } else {
+            user.setVerificationCode(null);
+            user.setIsEnabled(true);
+            userRepository.save(user);
+            return true;
+        }
+
     }
 }

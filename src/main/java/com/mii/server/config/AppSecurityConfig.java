@@ -43,6 +43,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/register")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/verify")
+                .permitAll()
                 .anyRequest()
                 // .authenticated()
                 .permitAll()

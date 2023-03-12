@@ -1,5 +1,6 @@
 package com.mii.server.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -33,10 +34,10 @@ public class LeaveHistory {
     // private Integer leaveId;
 
     @Column(nullable = false)
-    private Date startday;
+    private LocalDate startday;
 
     @Column(nullable = false)
-    private Date endday;
+    private LocalDate endday;
 
     @Column(nullable = false)
     private LocalDateTime applydate;
@@ -62,5 +63,5 @@ public class LeaveHistory {
 
     @ManyToOne
     @JoinColumn(name = "leave_id", nullable = false)
-    private Leave leave;    
+    private Leave leave;
 }

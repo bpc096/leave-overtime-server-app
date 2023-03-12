@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
-    
+
     private ProjectService projectService;
 
     @GetMapping
@@ -50,7 +50,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{id}")
-    public Project addProject(@PathVariable Integer id, @RequestBody Employee employee) {
+    public Project addEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
         return projectService.addProject(id, employee);
     }
 }

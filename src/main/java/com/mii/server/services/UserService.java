@@ -89,6 +89,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateQuota(Integer id, User user, Integer quota) {
+        getById(id);
+        user.setId(id);
+        user.setUsername(getById(id).getUsername());
+        user.setPassword(getById(id).getPassword());
+        user.setIsAccountNonLocked(getById(id).getIsAccountNonLocked());
+        user.setIsEnabled(getById(id).getIsEnabled());
+        user.setEmployee(getById(id).getEmployee());
+        user.setRoles(getById(id).getRoles());
+
+        user.setQuota(getById(id).getQuota() - quota);
+        return userRepository.save(user);
+    }
+
     public User delete(Integer id) {
         User user = getById(id);
         userRepository.delete(user);
@@ -103,5 +117,4 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    
 }

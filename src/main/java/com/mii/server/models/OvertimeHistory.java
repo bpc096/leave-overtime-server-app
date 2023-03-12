@@ -51,6 +51,8 @@ public class OvertimeHistory {
     // private Status status;
     private String status;
 
+    private String project;
+
     @ManyToOne
     @JoinColumn(name = "overtime_id", nullable = false)
     private Overtime overtime;

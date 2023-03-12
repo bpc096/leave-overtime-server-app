@@ -41,12 +41,18 @@ public class OvertimeHistory {
     @Column(nullable = true)
     private LocalDateTime respontime;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    // @ManyToOne
+    // @JoinColumn(name = "employee_id", nullable = false)
+    // private Employee employee;
+    private String employee;
+
+    // @ManyToOne
+    // @JoinColumn(name = "status_id", nullable = false)
+    // private Status status;
+    private String status;
 
     @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
-    private Status status;
+    @JoinColumn(name = "overtime_id", nullable = false)
+    private Overtime overtime;
 
 }

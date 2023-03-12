@@ -1,6 +1,7 @@
 package com.mii.server.services;
 
 import com.mii.server.models.Employee;
+import com.mii.server.models.Project;
 import com.mii.server.models.Role;
 import com.mii.server.models.User;
 import com.mii.server.models.dto.requests.UserRequest;
@@ -48,9 +49,9 @@ public class UserService {
         // user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         // set role
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleService.getById(1));
-        user.setRoles(roles);
+        // List<Role> roles = new ArrayList<>();
+        // roles.add(roleService.getById(1));
+        // user.setRoles(roles);
 
         user.setEmployee(employee);
         employee.setUser(user);
@@ -101,4 +102,6 @@ public class UserService {
         user.setRoles(roles);
         return userRepository.save(user);
     }
+
+    
 }

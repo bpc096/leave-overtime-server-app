@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,8 +40,12 @@ public class Project {
     // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     // @ManyToMany(mappedBy = "project")
     // private List<Employee> employees;
-    
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_project_employee", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
+
+    @OneToMany(mappedBy = "status")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Overtime> overtime;
 }

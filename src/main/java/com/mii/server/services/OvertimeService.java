@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+import com.mii.server.models.Project;
 import com.mii.server.models.Overtime;
 import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.models.dto.requests.OvertimeRequest;
@@ -24,8 +24,8 @@ public class OvertimeService {
     private ModelMapper modelMapper;
     private EmployeeService employeeService;
     private StatusService statusService;
+    private ProjectService projectService;
     private OvertimeHistoryService overtimeHistoryService;
-
 
     public List<Overtime> getAll() {
         return overtimeRepository.findAll();
@@ -37,28 +37,43 @@ public class OvertimeService {
     }
 
     public Overtime create(OvertimeRequest overtimeRequest) {
-        Overtime overtime = modelMapper.map(overtimeRequest,Overtime.class);
+        Overtime overtime = modelMapper.map(overtimeRequest, Overtime.class);
         overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
         overtime.setStatus(statusService.getById(overtimeRequest.getStatusId()));
+        overtime.setProject(projectService.getById(overtimeRequest.getProjectId()));
         overtime.setApplydate(LocalDateTime.now());
         overtime.setRespontime(null);
-        Overtime body = overtimeRepository.save(overtime); 
-        
-        overtimeHistoryService.create(overtimeRequest,body);
+
+        if (overtime.getCount() * 30000 > overtime.getProject().getOvertimeBudget()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Bugdet Overtime project telah habis");
+        }
+        Overtime body = overtimeRepository.save(overtime);
+
+        overtimeHistoryService.create(overtimeRequest, body);
         return body;
     }
 
     public Overtime update(Integer id, OvertimeRequest overtimeRequest) {
         getById(id);
-        Overtime overtime = modelMapper.map(overtimeRequest,Overtime.class);
+        Overtime overtime = modelMapper.map(overtimeRequest, Overtime.class);
         overtime.setId(id);
         overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
         overtime.setStatus(statusService.getById(overtimeRequest.getStatusId()));
-        
-
+        overtime.setProject(projectService.getById(overtimeRequest.getProjectId()));
         LocalDateTime apply = getById(id).getApplydate();
         overtime.setApplydate(apply);
         overtime.setRespontime(LocalDateTime.now());
+
+        if (overtime.getStatus().getId() == 3) {
+            Integer idproject = overtime.getProject().getId();
+            if (overtime.getCount() * 30000 < projectService.getById(idproject).getOvertimeBudget()) {
+
+                Project project = projectService.getById(idproject);
+                projectService.updateBudget(idproject, project, overtime.getCount() * 30000);
+            } else {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Permintaan cuti melebihi Quota");
+            }
+        }
         Overtime body = overtimeRepository.save(overtime);
         overtimeHistoryService.create(overtimeRequest, body);
         return body;

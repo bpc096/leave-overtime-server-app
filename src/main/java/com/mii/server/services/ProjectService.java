@@ -38,6 +38,16 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
+    public Project updateBudget(Integer id, Project project, Integer paid) {
+        getById(id);
+        project.setId(id);
+        project.setName(getById(id).getName());
+        project.setEmployees(getById(id).getEmployees());
+        project.setOvertimeBudget(getById(id).getOvertimeBudget() - paid);
+
+        return projectRepository.save(project);
+    }
+
     public Project delete(Integer id) {
         Project project = getById(id);
         projectRepository.delete(project);

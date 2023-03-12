@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -58,5 +58,9 @@ public class Leave {
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
+
+    @OneToMany(mappedBy = "leave")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<LeaveHistory> leavesHistories;
 
 }

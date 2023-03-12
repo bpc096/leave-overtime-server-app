@@ -36,26 +36,22 @@ public class OvertimeService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Overtime id not found!!!"));
     }
 
-    // public Overtime create(Overtime overtime) {
-    //     overtime.setApplydate(LocalDateTime.now());
-    //     overtime.setRespontime(null);
-    //     return overtimeRepository.save(overtime);
-    // }
-
     public Overtime create(OvertimeRequest overtimeRequest) {
         Overtime overtime = modelMapper.map(overtimeRequest,Overtime.class);
         overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
         overtime.setStatus(statusService.getById(overtimeRequest.getStatusId()));
         overtime.setApplydate(LocalDateTime.now());
         overtime.setRespontime(null);
+        Overtime body = overtimeRepository.save(overtime); 
         
-        overtimeHistoryService.create(overtimeRequest);
-        return overtimeRepository.save(overtime);
+        overtimeHistoryService.create(overtimeRequest,body);
+        return body;
     }
 
     public Overtime update(Integer id, OvertimeRequest overtimeRequest) {
         getById(id);
         Overtime overtime = modelMapper.map(overtimeRequest,Overtime.class);
+        overtime.setId(id);
         overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
         overtime.setStatus(statusService.getById(overtimeRequest.getStatusId()));
         
@@ -63,8 +59,9 @@ public class OvertimeService {
         LocalDateTime apply = getById(id).getApplydate();
         overtime.setApplydate(apply);
         overtime.setRespontime(LocalDateTime.now());
-        overtimeHistoryService.create2(id,overtimeRequest);
-        return overtimeRepository.save(overtime);
+        Overtime body = overtimeRepository.save(overtime);
+        overtimeHistoryService.create(overtimeRequest, body);
+        return body;
     }
 
     public Overtime delete(Integer id) {

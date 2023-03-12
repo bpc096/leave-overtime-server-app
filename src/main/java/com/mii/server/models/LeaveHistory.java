@@ -2,6 +2,7 @@ package com.mii.server.models;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,11 +50,17 @@ public class LeaveHistory {
     @Column(nullable = true)
     private LocalDateTime respontime;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    // @ManyToOne
+    // @JoinColumn(name = "employee_id", nullable = false)
+    // private Employee employee;
+    private String employee;
+
+    // @ManyToOne
+    // @JoinColumn(name = "status_id", nullable = false)
+    // private Status status;
+    private String status;
 
     @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
-    private Status status;
+    @JoinColumn(name = "leave_id", nullable = false)
+    private Leave leave;    
 }

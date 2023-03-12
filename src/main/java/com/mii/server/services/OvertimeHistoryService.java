@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mii.server.models.OvertimeHistory;
+import com.mii.server.models.Overtime;
 import com.mii.server.models.dto.requests.OvertimeRequest;
 import com.mii.server.repositories.OvertimeHistoryRepository;
 import com.mii.server.repositories.OvertimeRepository;
@@ -32,26 +33,27 @@ public class OvertimeHistoryService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Overtime History id not found!!!"));
     }
 
-    public OvertimeHistory create(OvertimeRequest overtimeRequest) {
+    public OvertimeHistory create(OvertimeRequest overtimeRequest, Overtime overtime) {
         OvertimeHistory overtimeHistory = modelMapper.map(overtimeRequest,OvertimeHistory.class);
-        overtimeHistory.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
-        overtimeHistory.setStatus(statusService.getById(overtimeRequest.getStatusId()));
+        overtimeHistory.setOvertime(overtime);
+        overtimeHistory.setEmployee(overtime.getEmployee().getName());
+        overtimeHistory.setStatus(overtime.getStatus().getName());
 
-        overtimeHistory.setApplydate(LocalDateTime.now());
-        overtimeHistory.setRespontime(null);
+        overtimeHistory.setApplydate(overtime.getApplydate());
+        overtimeHistory.setRespontime(overtime.getRespontime());
         return overtimeHistoryRepository.save(overtimeHistory);
     }
 
-    public OvertimeHistory create2(Integer id, OvertimeRequest overtimeRequest ) {
-        OvertimeHistory overtimeHistory = modelMapper.map(overtimeRequest,OvertimeHistory.class);
-        overtimeHistory.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
-        overtimeHistory.setStatus(statusService.getById(overtimeRequest.getStatusId()));
+    // public OvertimeHistory create2(Integer id, OvertimeRequest overtimeRequest ) {
+    //     OvertimeHistory overtimeHistory = modelMapper.map(overtimeRequest,OvertimeHistory.class);
+    //     overtimeHistory.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
+    //     overtimeHistory.setStatus(statusService.getById(overtimeRequest.getStatusId()));
 
-        LocalDateTime apply = getById(id).getApplydate();
-        overtimeHistory.setApplydate(apply);
-        overtimeHistory.setRespontime(LocalDateTime.now());
-        return overtimeHistoryRepository.save(overtimeHistory);
-    }
+    //     LocalDateTime apply = getById(id).getApplydate();
+    //     overtimeHistory.setApplydate(apply);
+    //     overtimeHistory.setRespontime(LocalDateTime.now());
+    //     return overtimeHistoryRepository.save(overtimeHistory);
+    // }
 
 
 }

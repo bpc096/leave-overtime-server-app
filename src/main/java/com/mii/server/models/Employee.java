@@ -64,4 +64,12 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Overtime> overtime;
+
+    // @ManyToMany(fetch = FetchType.EAGER)
+    // @JoinTable(name = "tb_employee_project", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+    // private List<Project> projects;
+
+    @ManyToMany(mappedBy = "employees")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Project> projects;
 }

@@ -33,26 +33,30 @@ public class LeaveHistoryService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leave id not found!!!"));
     }
 
-    public LeaveHistory create(LeaveRequest leaveRequest) {
+    public LeaveHistory create(LeaveRequest leaveRequest, Leave leave ) {
         LeaveHistory leaveHistory = modelMapper.map(leaveRequest,LeaveHistory.class);
-        leaveHistory.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
-        leaveHistory.setStatus(statusService.getById(leaveRequest.getStatusId()));
+        leaveHistory.setLeave(leave);
 
-        leaveHistory.setApplydate(LocalDateTime.now());
-        leaveHistory.setRespontime(null);
+        leaveHistory.setStartday(leave.getStartday());
+        leaveHistory.setEndday(leave.getEndday());
+        
+        leaveHistory.setStatus(leave.getStatus().getName());;
+        leaveHistory.setEmployee(leave.getEmployee().getName());
+        leaveHistory.setApplydate(leave.getApplydate());
+        leaveHistory.setRespontime(leave.getRespontime());
         return leaveHistoryRepository.save(leaveHistory);
     }
 
-    public LeaveHistory create2(Integer id, LeaveRequest leaveRequest ) {
-        LeaveHistory leaveHistory = modelMapper.map(leaveRequest,LeaveHistory.class);
-        leaveHistory.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
-        leaveHistory.setStatus(statusService.getById(leaveRequest.getStatusId()));
+    // public LeaveHistory create2(Integer id, LeaveRequest leaveRequest ) {
+    //     LeaveHistory leaveHistory = modelMapper.map(leaveRequest,LeaveHistory.class);
+    //     leaveHistory.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+    //     leaveHistory.setStatus(statusService.getById(leaveRequest.getStatusId()));
 
-        LocalDateTime apply = getById(id).getApplydate();
-        leaveHistory.setApplydate(apply);
-        leaveHistory.setRespontime(LocalDateTime.now());
-        return leaveHistoryRepository.save(leaveHistory);
-    }
+    //     LocalDateTime apply = getById(id).getApplydate();
+    //     leaveHistory.setApplydate(apply);
+    //     leaveHistory.setRespontime(LocalDateTime.now());
+    //     return leaveHistoryRepository.save(leaveHistory);
+    // }
 
 
 

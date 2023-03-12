@@ -55,9 +55,16 @@ public class LeaveService {
 
         leave.setApplydate(LocalDateTime.now());
         leave.setRespontime(null);
-        Leave body = leaveRepository.save(leave);
 
+        long diff = ChronoUnit.DAYS.between(leaveRequest.getStartday(), leaveRequest.getEndday());
+        Integer diffInt = (int) diff;
+        Integer iduser = leave.getEmployee().getId();
+        if (diffInt > userService.getById(iduser).getQuota()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Permintaan cuti melebihi Quota");
+        }
+        Leave body = leaveRepository.save(leave);
         leaveHistoryService.create(leaveRequest, body);
+
         return body;
     }
 
@@ -70,26 +77,29 @@ public class LeaveService {
         LocalDateTime apply = getById(id).getApplydate();
         leave.setApplydate(apply);
         leave.setRespontime(LocalDateTime.now());
-        // Date start = getById(id).getStartday();
-        // Date end = getById(id).getEndday();
         long diff = ChronoUnit.DAYS.between(getById(id).getStartday(), getById(id).getEndday());
         Integer diffInt = (int) diff;
         leave.setStatus(statusService.getById(leaveRequest.getStatusId()));
 
         if (leave.getStatus().getId() == 3) {
-
             Integer iduser = leave.getEmployee().getId();
-            // userService.getById(iduser).setQuota(user.getQuota() - 3);
-            // Integer quota = 3;
-            User usermodel = userService.getById(iduser);
-            // user2.add(userService.getById(iduser));
-            userService.updateQuota(iduser, usermodel, diffInt);
-            // userService.getById(iduser).setQuota(user.get);
+            if (diffInt < userService.getById(iduser).getQuota()) {
+
+                // userService.getById(iduser).setQuota(user.getQuota() - 3);
+                // Integer quota = 3;
+                User usermodel = userService.getById(iduser);
+                // user2.add(userService.getById(iduser));
+                userService.updateQuota(iduser, usermodel, diffInt);
+                // userService.getById(iduser).setQuota(user.get);
+            } else {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Permintaan cuti melebihi Quota");
+            }
         }
         Leave body = leaveRepository.save(leave);
         leaveHistoryService.create(leaveRequest, body);
 
         return body;
+
     }
 
     public Leave delete(Integer id) {

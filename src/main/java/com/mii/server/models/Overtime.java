@@ -53,7 +53,12 @@ public class Overtime {
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+
     @OneToMany(mappedBy = "overtime")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<OvertimeHistory> overtimeHistories;
+
 }

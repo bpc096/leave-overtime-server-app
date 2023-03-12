@@ -34,10 +34,10 @@ public class Leave {
     private Integer id;
 
     @Column(nullable = false)
-    private Date startday;
+    private LocalDate startday;
 
     @Column(nullable = false)
-    private Date endday;
+    private LocalDate endday;
 
     @Column(nullable = false)
     private LocalDateTime applydate;

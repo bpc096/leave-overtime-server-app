@@ -39,7 +39,7 @@ public class OvertimeService {
     public Overtime create(OvertimeRequest overtimeRequest) {
         Overtime overtime = modelMapper.map(overtimeRequest, Overtime.class);
         overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
-        overtime.setStatus(statusService.getById(overtimeRequest.getStatusId()));
+        overtime.setStatus(statusService.getById(1));
         overtime.setProject(projectService.getById(overtimeRequest.getProjectId()));
         overtime.setApplydate(LocalDateTime.now());
         overtime.setRespontime(null);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mii.server.models.Employee;
+// import com.mii.server.models.Project;
 import com.mii.server.repositories.EmployeeRepository;
 import lombok.AllArgsConstructor;
 
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
+    // private ProjectService projectService;
 
     public List<Employee> getAll() {
         return employeeRepository.findAll();
@@ -29,7 +31,7 @@ public class EmployeeService {
                         "Employee not found!!!"));
     }
 
-    // create without dto
+   
     public Employee create(Employee employee) {
         if (employeeRepository.findByEmail(employee.getEmail()).isPresent() &&
                 employeeRepository.findByPhone(employee.getPhone()).isPresent()) {

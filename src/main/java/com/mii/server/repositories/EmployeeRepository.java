@@ -19,6 +19,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE User u " + "SET u.enabled = TRUE WHERE u.email = ?1")    //email ada di attribute employee
+    @Query("UPDATE User u " + "SET u.isEnabled = TRUE WHERE u.username = ?1") // email ada di attribute employee
     int enableAppUser(String email);
 }

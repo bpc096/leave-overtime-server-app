@@ -15,13 +15,11 @@ import com.mii.server.models.User;
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query(value = "update tb_user_role set role_id= ", nativeQuery = true)
-    public List<User> changerole(String username);
+    // @Query(value = "update tb_user_role set role_id= ", nativeQuery = true)
+    // public List<User> changerole(String username);
 
-    public Optional<User> findByUsername(String username);
+    // public Optional<User> findByUsername(String username);
 
-    public Optional<User> findByUsernameOrEmployee_Email(String username, String email);
-
-    @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
-    public User findByVerificationCode(String code);
+    // public Optional<User> findByUsernameOrEmployee_Email(String username, String
+    // email);
 }

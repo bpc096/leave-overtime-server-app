@@ -1,9 +1,14 @@
 package com.mii.server.controllers;
 
+import com.mii.server.models.Employee;
+import com.mii.server.models.Project;
 import com.mii.server.models.Role;
 import com.mii.server.models.User;
 import com.mii.server.models.dto.requests.UserRequest;
 import com.mii.server.services.UserService;
+import com.mii.server.services.EmployeeService;
+import com.mii.server.services.ProjectService;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 
@@ -16,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    private EmployeeService employeeService;
+    private ProjectService projectService;
+
 
     @GetMapping
     public List<User> getAll() {
@@ -52,12 +60,4 @@ public class UserController {
         return userService.addRole(id, role);
     }
 
-    @GetMapping("/verify")
-    public String verifyUser(@Param("code") String code) {
-        if (userService.verify(code)) {
-            return "verify_success";
-        } else {
-            return "verify_fail";
-        }
-    }
 }

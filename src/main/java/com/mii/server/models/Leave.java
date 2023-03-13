@@ -11,7 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,13 +28,16 @@ import lombok.NoArgsConstructor;
 public class Leave {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @OneToMany(mappedBy = "leave")
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // private List<Overtime> overtime;
     private Integer id;
 
     @Column(nullable = false)
-    private Date startday;
+    private LocalDate startday;
 
     @Column(nullable = false)
-    private Date endday;
+    private LocalDate endday;
 
     @Column(nullable = false)
     private LocalDateTime applydate;
@@ -48,5 +54,13 @@ public class Leave {
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private Status status;
+
+    @OneToMany(mappedBy = "leave")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<LeaveHistory> leavesHistories;
 
 }

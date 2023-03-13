@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mii.server.models.Employee;
 import com.mii.server.models.Project;
 import com.mii.server.services.ProjectService;
 
@@ -20,7 +21,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
-    
+
     private ProjectService projectService;
 
     @GetMapping
@@ -46,5 +47,10 @@ public class ProjectController {
     @DeleteMapping(value = "/{id}")
     public Project delete(@PathVariable Integer id) {
         return projectService.delete(id);
+    }
+
+    @PostMapping("/{id}")
+    public Project addEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+        return projectService.addProject(id, employee);
     }
 }

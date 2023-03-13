@@ -33,20 +33,11 @@ public class LeaveHistoryController {
         return leaveHistoryService.getById(id);
     }
 
-    @PostMapping
-    public LeaveHistory create(@RequestBody LeaveHistory leaveHistory) {
-        return leaveHistoryService.create(leaveHistory);
-    }
+    // @PostMapping
+    // public LeaveHistory create(@RequestBody LeaveHistory leaveHistory) {
+    //     return leaveHistoryService.create(leaveHistory);
+    // }
 
-    @PutMapping(value = "/{id}")
-    public LeaveHistory update(@PathVariable Integer id, @RequestBody LeaveHistory leaveHistory) {
-        return leaveHistoryService.update(id, leaveHistory);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public LeaveHistory delete(@PathVariable Integer id) {
-        return leaveHistoryService.delete(id);
-    }
 
     
 }

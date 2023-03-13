@@ -1,6 +1,7 @@
 package com.mii.server.services;
 
 import com.mii.server.models.Employee;
+import com.mii.server.models.Project;
 import com.mii.server.models.Role;
 import com.mii.server.models.TokenVerif;
 import com.mii.server.models.User;
@@ -33,7 +34,6 @@ public class UserService {
     private ModelMapper modelMapper;
     private EmployeeService employeeService;
     private final TokenVerifService tokenVerifService;
-    private final EmailValidator emailValidator;
     // private PasswordEncoder passwordEncoder;
     private JavaMailSender mailSender;
 
@@ -55,9 +55,9 @@ public class UserService {
         // user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         // set role
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleService.getById(2));
-        user.setRoles(roles);
+        // List<Role> roles = new ArrayList<>();
+        // roles.add(roleService.getById(1));
+        // user.setRoles(roles);
 
         user.setEmployee(employee);
         employee.setUser(user);
@@ -117,6 +117,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateQuota(Integer id, User user, Integer quota) {
+        getById(id);
+        user.setId(id);
+        user.setUsername(getById(id).getUsername());
+        user.setPassword(getById(id).getPassword());
+        user.setIsAccountNonLocked(getById(id).getIsAccountNonLocked());
+        user.setIsEnabled(getById(id).getIsEnabled());
+        user.setEmployee(getById(id).getEmployee());
+        user.setRoles(getById(id).getRoles());
+
+        user.setQuota(getById(id).getQuota() - quota);
+        return userRepository.save(user);
+    }
+
     public User delete(Integer id) {
         User user = getById(id);
         userRepository.delete(user);
@@ -131,47 +145,4 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    private User sendVerificationEmail(Employee employee, User user, String siteURL)
-            throws MessagingException, UnsupportedEncodingException {
-        String toAddress = employee.getEmail();
-        String fromAddress = "billpetrus8@gmail.com";
-        String senderName = "Waroeng Idea";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Waroeng IDEA.";
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", employee.getName());
-        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
-
-        content = content.replace("[[URL]]", verifyURL);
-        helper.setText(content, true);
-
-        mailSender.send(message);
-        System.out.println("Email has been sent");
-
-        return user;
-    }
-
-    public boolean verify(String verificationCode) {
-        User user = userRepository.findByVerificationCode(verificationCode);
-        if (user == null || user.getIsEnabled()) {
-            return false;
-        } else {
-            user.setVerificationCode(null);
-            user.setIsEnabled(true);
-            userRepository.save(user);
-            return true;
-        }
-
-    }
 }

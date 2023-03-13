@@ -8,6 +8,11 @@ import lombok.Data;
 public class OvertimeRequest {
     private Integer count;
     private LocalDateTime applydate;
-    private Integer status;
+    private String purpose;
+    private String updateby;
+    private Integer responsetime;
+    private Integer employeeId;
+    private Integer statusId;
+    private Integer projectId;
 
 }

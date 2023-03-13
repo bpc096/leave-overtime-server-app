@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mii.server.services.AppUserDetailService;
+import com.mii.server.services.AppUserService;
 
 import lombok.AllArgsConstructor;
 
@@ -21,13 +21,13 @@ import lombok.AllArgsConstructor;
 // @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AppUserDetailService appUserDetailService;
+    private AppUserService appUserService;
     private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(appUserDetailService)
+                .userDetailsService(appUserService)
                 .passwordEncoder(passwordEncoder);
     }
 

@@ -1,13 +1,16 @@
 package com.mii.server.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mii.server.models.Leave;
 import com.mii.server.models.LeaveHistory;
+import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.repositories.LeaveHistoryRepository;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +19,10 @@ import lombok.AllArgsConstructor;
 @Service
 public class LeaveHistoryService {
     private LeaveHistoryRepository leaveHistoryRepository;
+    private ModelMapper modelMapper;
+    private EmployeeService employeeService;
+    private StatusService statusService;
+    // private LeaveHistoryService leaveHistoryService;
 
     public List<LeaveHistory> getAll() {
         return leaveHistoryRepository.findAll();
@@ -23,25 +30,34 @@ public class LeaveHistoryService {
 
     public LeaveHistory getById(Integer id) {
         return leaveHistoryRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role id not found!!!"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leave id not found!!!"));
     }
 
-    public LeaveHistory create(LeaveHistory leaveHistory) {
+    public LeaveHistory create(LeaveRequest leaveRequest, Leave leave ) {
+        LeaveHistory leaveHistory = modelMapper.map(leaveRequest,LeaveHistory.class);
+        leaveHistory.setLeave(leave);
+
+        leaveHistory.setStartday(leave.getStartday());
+        leaveHistory.setEndday(leave.getEndday());
         
+        leaveHistory.setStatus(leave.getStatus().getName());;
+        leaveHistory.setEmployee(leave.getEmployee().getName());
+        leaveHistory.setApplydate(leave.getApplydate());
+        leaveHistory.setRespontime(leave.getRespontime());
         return leaveHistoryRepository.save(leaveHistory);
     }
 
-    public LeaveHistory update(Integer id, LeaveHistory leaveHistory) {
-        getById(id);
-        leaveHistory.setId(id);
-        return leaveHistoryRepository.save(leaveHistory);
-    }
+    // public LeaveHistory create2(Integer id, LeaveRequest leaveRequest ) {
+    //     LeaveHistory leaveHistory = modelMapper.map(leaveRequest,LeaveHistory.class);
+    //     leaveHistory.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+    //     leaveHistory.setStatus(statusService.getById(leaveRequest.getStatusId()));
 
-    public LeaveHistory delete(Integer id) {
-        LeaveHistory leaveHistory = getById(id);
-        leaveHistoryRepository.delete(leaveHistory);
-        return leaveHistory;
-    }
+    //     LocalDateTime apply = getById(id).getApplydate();
+    //     leaveHistory.setApplydate(apply);
+    //     leaveHistory.setRespontime(LocalDateTime.now());
+    //     return leaveHistoryRepository.save(leaveHistory);
+    // }
+
 
 
 

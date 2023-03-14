@@ -39,8 +39,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private Boolean isEnabled = false;
-    private Boolean isAccountNonLocked = true;
+    private Boolean isEnabled = true;
+    private Boolean isAccountNonLocked = false;
 
     @Column(nullable = false)
     private Integer quota = 12;

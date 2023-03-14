@@ -35,7 +35,7 @@ public class Token {
     
     private LocalDateTime expired;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime confirmed;
 
     @ManyToOne(cascade = CascadeType.ALL)

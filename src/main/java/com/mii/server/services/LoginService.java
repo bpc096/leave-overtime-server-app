@@ -94,10 +94,12 @@ public User register(UserRequest userRequest, String siteURL)
     user.setRoles(roles);
 
     // set password
-    employee.setManager(employeeService.getById(userRequest.getManagerId()));
+    if(userRequest.getManagerId()!=null){
+        employee.setManager(employeeService.getById(userRequest.getManagerId()));
+
+    }   
     user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
-    // set role
     user.setEmployee(employee);
     employee.setUser(user);
     token.setUser(user);
@@ -107,6 +109,7 @@ public User register(UserRequest userRequest, String siteURL)
     token.setToken(code);
     token.setCreated(LocalDateTime.now());
     token.setExpired(LocalDateTime.now().plusHours(1));
+//     token.setConfirmed(null);
 
     sendVerificationEmail(user, siteURL, token);
 

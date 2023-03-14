@@ -46,7 +46,6 @@ public class UserService {
         Employee employee = modelMapper.map(userRequest, Employee.class);
         if(userRequest.getManagerId()!=null){
             employee.setManager(employeeService.getById(userRequest.getManagerId()));
-
         }
         
         

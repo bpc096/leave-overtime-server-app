@@ -15,6 +15,6 @@ public class UserRequest {
     private String address;
     private String email;
     private String phone;
-    private String token;
+    // private String token;
     // private String verificationCode;
 }

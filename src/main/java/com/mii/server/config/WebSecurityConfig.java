@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AppUserService appUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -24,13 +24,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity htpp) throws Exception {
         htpp
-            .csrf().disable()
-            .authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/v*/registration/**")
                 .permitAll()
-            .anyRequest()
-            .authenticated().and()
-            .formLogin();
+                .anyRequest()
+                // .authenticated()
+                .permitAll()
+                .and()
+                .formLogin();
     }
 
     @Override
@@ -40,11 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = 
-                new DaoAuthenticationProvider();
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
         provider.setUserDetailsService(appUserService);
         return provider;
     }
-    
+
 }

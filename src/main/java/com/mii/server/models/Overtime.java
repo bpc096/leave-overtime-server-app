@@ -1,6 +1,7 @@
 package com.mii.server.models;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,7 +32,11 @@ public class Overtime {
     private Integer id;
 
     @Column(nullable = false)
-    private Integer count;
+    private LocalTime startTime;
+
+    
+    @Column(nullable = false)
+    private LocalTime endTime;
 
     @Column(nullable = false)
     private LocalDateTime applydate;

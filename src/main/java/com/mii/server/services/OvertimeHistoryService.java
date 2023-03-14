@@ -39,6 +39,8 @@ public class OvertimeHistoryService {
         overtimeHistory.setEmployee(overtime.getEmployee().getName());
         overtimeHistory.setStatus(overtime.getStatus().getName());
         overtimeHistory.setProject(overtime.getProject().getName());
+        overtimeHistory.setStarTime(overtime.getStartTime());
+        overtimeHistory.setEndTime(overtime.getEndTime());
 
         overtimeHistory.setApplydate(overtime.getApplydate());
         overtimeHistory.setRespontime(overtime.getRespontime());

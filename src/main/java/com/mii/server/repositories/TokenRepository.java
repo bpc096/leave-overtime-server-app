@@ -3,26 +3,24 @@ package com.mii.server.repositories;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.hibernate.type.TrueFalseType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mii.server.models.ConfirmationToken;
+import com.mii.server.models.Token;
 
 @Repository
 @Transactional(readOnly = true)
-public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long>{
+public interface TokenRepository extends JpaRepository<Token, Integer>{
 
-    Optional<ConfirmationToken> findByToken(String token);
+    public Optional<Token> findByToken(String token);
 
     @Transactional
     @Modifying
-    @Query("UPDATE ConfirmationToken c " +
-    "SET c.confirmedAt = ?2 " +
-    "WHERE c.token = ?1")
-    int updateConfirmedAt(String token, 
-                        LocalDateTime confirmedAt);
+    @Query("UPDATE Token t " + "SET t.confirmed = ?2 " + "WHERE t.token = ?1")
+    public Integer updateConfirmed(String token, LocalDateTime confirmed);
+
+    
 }

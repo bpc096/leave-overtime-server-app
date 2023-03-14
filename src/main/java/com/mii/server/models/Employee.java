@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,8 +34,9 @@ public class Employee {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
-    private Integer idmanager;
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private Employee manager;
 
     @Column(nullable = false)
     private String gender;
@@ -72,4 +74,6 @@ public class Employee {
     @ManyToMany(mappedBy = "employees")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Project> projects;
+
+    
 }

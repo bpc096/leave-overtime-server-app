@@ -1,6 +1,6 @@
-package com.mii.server.models;
+// package com.mii.server.models;
 
 
-public interface EmailSender {
-    void send(String to, String email);
-}
+// public interface EmailSender {
+//     void send(String to, String email);
+// }

@@ -44,6 +44,14 @@ public class UserService {
     public User create(UserRequest userRequest) {
         User user = modelMapper.map(userRequest, User.class);
         Employee employee = modelMapper.map(userRequest, Employee.class);
+        if(userRequest.getManagerId()!=null){
+            employee.setManager(employeeService.getById(userRequest.getManagerId()));
+
+        }
+        
+        
+        // user.setEmployee(employeeService.getById(userRequest.getManagerId()));
+        // employee.setManager(employeeService.getById(userRequest.getManagerId()));
 
         // set password
         // user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
@@ -55,6 +63,8 @@ public class UserService {
 
         user.setEmployee(employee);
         employee.setUser(user);
+        // employee.setManager(employee);
+        // employee.setManager(userRequest.getManagerId());
 
         return userRepository.save(user);
     }
@@ -98,7 +108,7 @@ public class UserService {
         user.setIsEnabled(getById(id).getIsEnabled());
         user.setEmployee(getById(id).getEmployee());
         user.setRoles(getById(id).getRoles());
-
+        // user.setEmployee(null);.setManager(employeeService.getById(userRequest.getManagerId()));
         user.setQuota(getById(id).getQuota() - quota);
         return userRepository.save(user);
     }
@@ -117,4 +127,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Integer accountUser(String username) {
+        return userRepository.accountUser(username);
+    }
 }

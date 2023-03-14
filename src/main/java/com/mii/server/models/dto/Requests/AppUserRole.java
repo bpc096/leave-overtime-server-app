@@ -1,10 +1,10 @@
-package com.mii.server.models.dto.requests;
+// package com.mii.server.models.dto.requests;
 
-// import lombok.Data;
+// // import lombok.Data;
 
-// @Data
-public enum AppUserRole {
+// // @Data
+// public enum AppUserRole {
 
-    USER,
-    ADMIN
-}
+//     USER,
+//     ADMIN
+// }

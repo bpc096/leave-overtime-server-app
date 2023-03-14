@@ -1,7 +1,9 @@
 package com.mii.server.services;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -44,7 +46,9 @@ public class OvertimeService {
         overtime.setApplydate(LocalDateTime.now());
         overtime.setRespontime(null);
 
-        if (overtime.getCount() * 30000 > overtime.getProject().getOvertimeBudget()) {
+        Duration diff = Duration.between(overtime.getStartTime(), overtime.getEndTime());
+        Integer diffInt = (int) diff.toHours();
+        if (diffInt * 30000 > overtime.getProject().getOvertimeBudget()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Bugdet Overtime project telah habis");
         }
         Overtime body = overtimeRepository.save(overtime);
@@ -63,13 +67,14 @@ public class OvertimeService {
         LocalDateTime apply = getById(id).getApplydate();
         overtime.setApplydate(apply);
         overtime.setRespontime(LocalDateTime.now());
-
+        Duration diff = Duration.between(overtime.getStartTime(), overtime.getEndTime());
+        Integer diffInt = (int) diff.toHours();
         if (overtime.getStatus().getId() == 3) {
             Integer idproject = overtime.getProject().getId();
-            if (overtime.getCount() * 30000 < projectService.getById(idproject).getOvertimeBudget()) {
+            if (diffInt * 30000 < projectService.getById(idproject).getOvertimeBudget()) {
 
                 Project project = projectService.getById(idproject);
-                projectService.updateBudget(idproject, project, overtime.getCount() * 30000);
+                projectService.updateBudget(idproject, project, diffInt * 30000);
             } else {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Permintaan cuti melebihi Quota");
             }

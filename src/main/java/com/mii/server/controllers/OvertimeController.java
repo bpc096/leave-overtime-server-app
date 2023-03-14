@@ -2,6 +2,7 @@ package com.mii.server.controllers;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.*;
@@ -21,30 +22,36 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/overtime")
+@PreAuthorize("hasAnyRole('ADD', 'MANAGER', 'HR')")
 public class OvertimeController {
-    
+
     private OvertimeService overtimeService;
 
+    @PreAuthorize("hasAnyAuthority('READ_ADD', 'READ_MANAGER', 'READ_HR')")
     @GetMapping
     public List<Overtime> getAll() {
         return overtimeService.getAll();
     }
 
+    @PreAuthorize("hasAnyAuthority('READ_ADD', 'READ_MANAGER', 'READ_HR')")
     @GetMapping(value = "/{id}")
     public Overtime getById(@PathVariable Integer id) {
         return overtimeService.getById(id);
     }
 
+    @PreAuthorize("hasAnyAuthority('CREATE_ADD', 'CREATE_MANAGER', 'CREATE_HR')")
     @PostMapping
     public Overtime create(@RequestBody OvertimeRequest overtimeRequest) {
         return overtimeService.create(overtimeRequest);
     }
 
+    @PreAuthorize("hasAnyAuthority('UPDATE_ADD', 'UPDATE_MANAGER', 'UPDATE_HR')")
     @PutMapping(value = "/{id}")
     public Overtime update(@PathVariable Integer id, @RequestBody OvertimeRequest overtimeRequest) {
         return overtimeService.update(id, overtimeRequest);
     }
 
+    @PreAuthorize("hasAnyAuthority('DELETE_ADD', 'DELETE_MANAGER', 'DELETE_HR')")
     @DeleteMapping(value = "/{id}")
     public Overtime delete(@PathVariable Integer id) {
         return overtimeService.delete(id);

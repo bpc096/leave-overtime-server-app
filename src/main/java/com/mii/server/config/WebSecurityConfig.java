@@ -55,8 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/verify")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
-                // .permitAll()
+                // .authenticated()
+                .permitAll()
                 .and()
                 .httpBasic();
         // .formLogin();

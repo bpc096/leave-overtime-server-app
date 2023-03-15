@@ -44,11 +44,10 @@ public class UserService {
     public User create(UserRequest userRequest) {
         User user = modelMapper.map(userRequest, User.class);
         Employee employee = modelMapper.map(userRequest, Employee.class);
-        if(userRequest.getManagerId()!=null){
+        if (userRequest.getManagerId() != null) {
             employee.setManager(employeeService.getById(userRequest.getManagerId()));
         }
-        
-        
+
         // user.setEmployee(employeeService.getById(userRequest.getManagerId()));
         // employee.setManager(employeeService.getById(userRequest.getManagerId()));
 
@@ -56,9 +55,9 @@ public class UserService {
         // user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         // set role
-        // List<Role> roles = new ArrayList<>();
-        // roles.add(roleService.getById(1));
-        // user.setRoles(roles);
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.getById(1));
+        user.setRoles(roles);
 
         user.setEmployee(employee);
         employee.setUser(user);

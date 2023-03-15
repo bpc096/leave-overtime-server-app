@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,6 +16,7 @@ import com.mii.server.models.Leave;
 import com.mii.server.models.User;
 import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.repositories.LeaveRepository;
+import com.mii.server.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -28,6 +31,7 @@ public class LeaveService {
     private LeaveHistoryService leaveHistoryService;
     // private UserRepository userRepository;
     private UserService userService;
+    private UserRepository userRepository;
     // private User usermodel;
 
     public List<Leave> getAll() {
@@ -47,8 +51,12 @@ public class LeaveService {
 
     public Leave create(LeaveRequest leaveRequest) {
         Leave leave = modelMapper.map(leaveRequest, Leave.class);
-        leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName()).get();
+        leave.setEmployee(user.getEmployee());
+        leave.setUpdateby("");
+        // leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
         // leave.setStatus(statusService.getById(leaveRequest.getStatusId()));
         leave.setStatus(statusService.getById(1));
 
@@ -59,7 +67,7 @@ public class LeaveService {
         Integer diffInt = (int) diff;
         Integer iduser = leave.getEmployee().getId();
         if (diffInt > userService.getById(iduser).getQuota()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Permintaan cuti melebihi Quota");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Leave requests exceed Quota");
         }
         Leave body = leaveRepository.save(leave);
         leaveHistoryService.create(leaveRequest, body);
@@ -71,7 +79,13 @@ public class LeaveService {
         getById(id);
         Leave leave = modelMapper.map(leaveRequest, Leave.class);
         leave.setId(id);
-        leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName()).get();
+
+        Leave leave2 = getById(id);
+        leave.setEmployee(leave2.getEmployee());
+        // leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
+        leave.setUpdateby(user.getEmployee().getName());
 
         LocalDateTime apply = getById(id).getApplydate();
         leave.setApplydate(apply);
@@ -91,14 +105,12 @@ public class LeaveService {
                 userService.updateQuota(iduser, usermodel, diffInt);
                 // userService.getById(iduser).setQuota(user.get);
             } else {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Permintaan cuti melebihi Quota");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Leave requests exceed Quota");
             }
         }
         Leave body = leaveRepository.save(leave);
         leaveHistoryService.create(leaveRequest, body);
-
         return body;
-
     }
 
     public Leave delete(Integer id) {

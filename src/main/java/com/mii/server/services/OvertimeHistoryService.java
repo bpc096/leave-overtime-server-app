@@ -41,23 +41,11 @@ public class OvertimeHistoryService {
         overtimeHistory.setProject(overtime.getProject().getName());
         overtimeHistory.setStarTime(overtime.getStartTime());
         overtimeHistory.setEndTime(overtime.getEndTime());
+        overtimeHistory.setUpdateby(overtime.getUpdateby());
 
         overtimeHistory.setApplydate(overtime.getApplydate());
         overtimeHistory.setRespontime(overtime.getRespontime());
         return overtimeHistoryRepository.save(overtimeHistory);
     }
-
-    // public OvertimeHistory create2(Integer id, OvertimeRequest overtimeRequest )
-    // {
-    // OvertimeHistory overtimeHistory =
-    // modelMapper.map(overtimeRequest,OvertimeHistory.class);
-    // overtimeHistory.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
-    // overtimeHistory.setStatus(statusService.getById(overtimeRequest.getStatusId()));
-
-    // LocalDateTime apply = getById(id).getApplydate();
-    // overtimeHistory.setApplydate(apply);
-    // overtimeHistory.setRespontime(LocalDateTime.now());
-    // return overtimeHistoryRepository.save(overtimeHistory);
-    // }
 
 }

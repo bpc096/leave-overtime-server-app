@@ -2,6 +2,7 @@ package com.mii.server.controllers;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,25 +20,21 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/leaveHistory")
+@PreAuthorize("hasAnyRole('ADD', 'MANAGER', 'HR')")
 public class LeaveHistoryController {
-    
+
     private LeaveHistoryService leaveHistoryService;
 
+    @PreAuthorize("hasAnyAuthority('READ_ADD', 'READ_MANAGER', 'READ_HR')")
     @GetMapping
-    public List<LeaveHistory> getAll(){
+    public List<LeaveHistory> getAll() {
         return leaveHistoryService.getAll();
     }
 
+    @PreAuthorize("hasAnyAuthority('READ_ADD', 'READ_MANAGER', 'READ_HR')")
     @GetMapping(value = "/{id}")
     public LeaveHistory getById(@PathVariable Integer id) {
         return leaveHistoryService.getById(id);
     }
 
-    // @PostMapping
-    // public LeaveHistory create(@RequestBody LeaveHistory leaveHistory) {
-    //     return leaveHistoryService.create(leaveHistory);
-    // }
-
-
-    
 }

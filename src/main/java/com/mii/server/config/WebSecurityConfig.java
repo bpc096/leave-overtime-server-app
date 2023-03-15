@@ -50,13 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/register")
                 .permitAll()
-                .antMatchers(HttpMethod.POST, "/registration")
-                .permitAll()
                 .antMatchers(HttpMethod.GET, "/verify")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
-                // .permitAll()
+                // .authenticated()
+                .permitAll()
                 .and()
                 .httpBasic();
         // .formLogin();

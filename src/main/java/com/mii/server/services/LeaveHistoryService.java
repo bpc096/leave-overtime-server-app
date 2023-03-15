@@ -20,8 +20,8 @@ import lombok.AllArgsConstructor;
 public class LeaveHistoryService {
     private LeaveHistoryRepository leaveHistoryRepository;
     private ModelMapper modelMapper;
-    private EmployeeService employeeService;
-    private StatusService statusService;
+    // private EmployeeService employeeService;
+    // private StatusService statusService;
     // private LeaveHistoryService leaveHistoryService;
 
     public List<LeaveHistory> getAll() {

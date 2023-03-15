@@ -14,7 +14,6 @@ import com.mii.server.models.Leave;
 import com.mii.server.models.User;
 import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.repositories.LeaveRepository;
-import com.mii.server.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
 

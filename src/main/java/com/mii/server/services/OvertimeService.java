@@ -7,14 +7,19 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import com.mii.server.models.Project;
+import com.mii.server.models.User;
 import com.mii.server.models.Overtime;
 import com.mii.server.models.dto.requests.LeaveRequest;
 import com.mii.server.models.dto.requests.OvertimeRequest;
 import com.mii.server.repositories.OvertimeRepository;
+import com.mii.server.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -28,6 +33,7 @@ public class OvertimeService {
     private StatusService statusService;
     private ProjectService projectService;
     private OvertimeHistoryService overtimeHistoryService;
+    private UserRepository userRepository;
 
     public List<Overtime> getAll() {
         return overtimeRepository.findAll();
@@ -40,7 +46,15 @@ public class OvertimeService {
 
     public Overtime create(OvertimeRequest overtimeRequest) {
         Overtime overtime = modelMapper.map(overtimeRequest, Overtime.class);
-        overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));
+
+        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // User user = userRepository.findByUsername(auth.getName()).get();
+        // overtime.setEmployee(user.getEmployee());
+
+        overtime.setEmployee(employeeService.getById(overtimeRequest.getEmployeeId()));;
+
+        
+
         overtime.setStatus(statusService.getById(1));
         overtime.setProject(projectService.getById(overtimeRequest.getProjectId()));
         overtime.setApplydate(LocalDateTime.now());

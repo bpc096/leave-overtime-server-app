@@ -6,9 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.mii.server.models.Status;
-import com.mii.server.models.TypeLeave;
 import com.mii.server.services.StatusService;
-import com.mii.server.services.TypeLeaveService;
 
 import lombok.AllArgsConstructor;
 

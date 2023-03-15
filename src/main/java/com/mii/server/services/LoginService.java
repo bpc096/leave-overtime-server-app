@@ -12,7 +12,6 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -113,12 +112,7 @@ public User register(UserRequest userRequest, String siteURL)
 
     sendVerificationEmail(user, siteURL, token);
 
-//        Token confirmToken = new Token(
-//                code,
-//                LocalDateTime.now(),
-//                LocalDateTime.now().plusHours(1),
-//                user
-//        );
+
     tokenService.create(token);
 
     return userRepository.save(user);

@@ -61,4 +61,8 @@ public class ProjectService {
         project.setEmployees(employees);
         return projectRepository.save(project);
     }
+
+    public List<Project> findProject (Integer id){
+        return projectRepository.findproject(id);
+    }
 }

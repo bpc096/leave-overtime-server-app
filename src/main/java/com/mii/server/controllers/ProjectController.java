@@ -61,4 +61,10 @@ public class ProjectController {
     public Project addEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
         return projectService.addProject(id, employee);
     }
+
+    @PostMapping("/find/{id}")
+    public List<Project> findProjects(@PathVariable Integer id) {
+       return projectService.findProject(id);
+    }
+    
 }

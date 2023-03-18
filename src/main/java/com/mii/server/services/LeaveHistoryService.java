@@ -40,9 +40,11 @@ public class LeaveHistoryService {
         leaveHistory.setStartday(leave.getStartday());
         leaveHistory.setEndday(leave.getEndday());
         leaveHistory.setUpdateby(leave.getUpdateby());
-
+        // leaveHistory.setStartday(leave.getStartday());
+        // leaveHistory.setEndday(leave.getEndday());
+        leaveHistory.setReason(leave.getReason());
         leaveHistory.setStatus(leave.getStatus().getName());
-        ;
+        
         leaveHistory.setEmployee(leave.getEmployee().getName());
         leaveHistory.setApplydate(leave.getApplydate());
         leaveHistory.setRespontime(leave.getRespontime());

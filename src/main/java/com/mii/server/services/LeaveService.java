@@ -86,7 +86,9 @@ public class LeaveService {
         leave.setEmployee(leave2.getEmployee());
         // leave.setEmployee(employeeService.getById(leaveRequest.getEmployeeId()));
         leave.setUpdateby(user.getEmployee().getName());
-
+        leave.setStartday(getById(id).getStartday());
+        leave.setEndday(getById(id).getEndday());
+        leave.setReason(getById(id).getReason());
         LocalDateTime apply = getById(id).getApplydate();
         leave.setApplydate(apply);
         leave.setRespontime(LocalDateTime.now());

@@ -32,11 +32,11 @@ public class Overtime {
     private Integer id;
 
     @Column(nullable = false)
-    private LocalTime startTime;
+    private LocalDateTime startTime;
 
     
     @Column(nullable = false)
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
     @Column(nullable = false)
     private LocalDateTime applydate;

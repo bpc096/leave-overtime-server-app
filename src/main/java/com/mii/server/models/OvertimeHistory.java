@@ -28,11 +28,11 @@ public class OvertimeHistory {
     private Integer id;
 
     @Column(nullable = false)
-    private LocalTime starTime;
+    private LocalDateTime starTime;
 
     
     @Column(nullable = false)
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
     @Column(nullable = false)
     private LocalDateTime applydate;

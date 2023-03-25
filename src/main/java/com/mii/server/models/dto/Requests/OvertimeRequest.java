@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class OvertimeRequest {
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     private LocalDateTime applydate;
     private String purpose;
